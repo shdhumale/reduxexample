@@ -22,30 +22,30 @@ const initialState = {
 
 //2- Create Action
 
-const FETCH_USER_REQUEST = "FETCH_USER_REQUEST"
-const FETCH_USER_SUCCESS = "FETCH_USER_SUCCESS"
-const FETCH_USER_ERROR = "FETCH_USER_ERROR"
+const USER_REQUEST = "USER_REQUEST"
+const USER_SUCCESS = "USER_SUCCESS"
+const USER_ERROR = "USER_ERROR"
 
 
 //3- Create Action Initiators
 
 const fetchUserRequest = () => {
     return {
-        type: FETCH_USER_REQUEST
+        type: USER_REQUEST
 
     }
 
 }
 const fetchUserSuccess = (users) => {
     return {
-        type: FETCH_USER_SUCCESS,
+        type: USER_SUCCESS,
         payload: users
 
     }
 }
 const fetchUserError = (error) => {
     return {
-        type: FETCH_USER_ERROR,
+        type: USER_ERROR,
         payload: error
 
     }
@@ -56,17 +56,17 @@ const fetchUserError = (error) => {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case FETCH_USER_REQUEST: return {
+        case USER_REQUEST: return {
             ...state,
             loading: true
         }
-        case FETCH_USER_SUCCESS: return {
+        case USER_SUCCESS: return {
             loading: false,
             users: action.payload,
             error: ''
 
         }
-        case FETCH_USER_SUCCESS: return {
+        case USER_SUCCESS: return {
             loading: false,
             users: [],
             error: action.payload
@@ -75,12 +75,14 @@ const reducer = (state = initialState, action) => {
 
 }
 
-//6- Create Thunk Async Function this will return a Async function rather than action object as we defined in other action creater. Also this has ability to dispath the action
+//6- Create Thunk Async Function this will return a Async function rather than action object as we defined in other action creater. Also this has ability to dispatch the action
 
 
 const fetchUsers = () => {
     return function (dispatch) {
-        axios.get('https://jsonplaceholder.typicode.com/users').then(
+        //axios.get('https://jsonplaceholder.typicode.com/users').then(
+        //axios.get('https://jsonplaceholder.typicode.com/todos').then(
+        axios.get('https://jsonplaceholder.typicode.com/posts/1').then(
             response => {
                 const users = response.data
                 dispatch(fetchUserSuccess(users))
